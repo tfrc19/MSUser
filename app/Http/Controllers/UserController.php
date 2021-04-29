@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Traits\ApiResponser;
 
 class UserController extends Controller
 {
+    use ApiResponser;
     /**
      * Create a new controller instance.
      *
@@ -17,11 +19,15 @@ class UserController extends Controller
         //
     }
 
-    public function index($user){
+        public function index(){
         //
-        $user = User::findOrFail($user);
-        
-         return response()->json($user, 200)->header('Content-Type','application/json');
+            $user = User::all();
+            return $this->successResponse($user);
+        }
+        public function show($user)
+        {
+            $user = User::findOrFail($user);
+            return $this->successResponse($user);
         }
         public function login(Request $request)
         {
